@@ -1,1 +1,0 @@
-# Sparkify-data-warehousing
