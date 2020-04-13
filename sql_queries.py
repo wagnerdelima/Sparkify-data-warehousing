@@ -122,10 +122,25 @@ DISTSTYLE AUTO;
 # STAGING TABLES
 
 staging_events_copy = ("""
-""").format()
+COPY events_stage
+FROM {}
+CREDENTIALS {}
+FORMAT AS JSON {} REGION 'us-west-2';
+""").format(
+    config['S3']['LOG_DATA'],
+    config['IAM_ROLE']['ARN'],
+    config['S3']['LOG_JSONPATH'],
+)
 
 staging_songs_copy = ("""
-""").format()
+COPY songs_stage
+FROM {}
+CREDENTIALS {}
+FORMAT AS JSON 'auto' REGION 'us-west-2' TRUNCATECOLUMNS;
+""").format(
+    config['S3']['SONG_DATA'],
+    config['IAM_ROLE']['ARN'],
+)
 
 # FINAL TABLES
 
