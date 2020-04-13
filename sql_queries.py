@@ -78,7 +78,8 @@ CREATE TABLE users (
     last_name VARCHAR NOT NULL,
     gender VARCHAR NOT NULL,
     level FLOAT8
-);
+)
+DISTSTYLE KEY DISTKEY (user_id);
 """)
 
 song_table_create = ("""
@@ -88,7 +89,9 @@ CREATE TABLE songs (
     artist_id INT NOT NULL,
     year INT,
     duration FLOAT8
-);
+)
+DISTSTYLE AUTO
+COMPOUND SORTKEY (title, year);
 """)
 
 artist_table_create = ("""
@@ -98,7 +101,9 @@ CREATE TABLE artists (
     location VARCHAR ENCODE ZSTD,
     latitude FLOAT8,
     longitude FLOAT8
-);
+)
+DISTSTYLE AUTO
+SORTKEY (name);
 """)
 
 time_table_create = ("""
@@ -110,7 +115,8 @@ CREATE TABLE time (
     month INT NOT NULL,
     year INT NOT NULL,
     weekday INT NOT NULL
-);
+)
+DISTSTYLE AUTO;
 """)
 
 # STAGING TABLES
