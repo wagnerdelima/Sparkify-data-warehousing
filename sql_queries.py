@@ -58,7 +58,7 @@ CREATE TABLE songs_stage (
 songplay_table_create = ("""
 CREATE TABLE songplays (
     songplay_id INT IDENTITY(0,1) PRIMARY KEY NOT NULL,
-    start_time TIMESTAMP NOT NULL SORTKEY,
+    start_time TIMESTAMP NOT NULL,
     user_id INT NOT NULL,
     level VARCHAR NOT NULL,
     song_id INT NOT NULL,
@@ -66,7 +66,9 @@ CREATE TABLE songplays (
     session_id INT NOT NULL,
     location VARCHAR ENCODE ZSTD NOT NULL,
     user_agent VARCHAR ENCODE ZSTD NOT NULL
-);
+)
+DISTSTYLE KEY DISTKEY (user_id)
+SORTKEY(start_time);
 """)
 
 user_table_create = ("""
