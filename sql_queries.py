@@ -90,9 +90,25 @@ CREATE TABLE songs (
 """)
 
 artist_table_create = ("""
+CREATE TABLE artists (
+    artist_id INT NOT NULL,
+    name VARCHAR,
+    location VARCHAR ENCODE ZSTD,
+    latitude FLOAT8,
+    longitude FLOAT8
+);
 """)
 
 time_table_create = ("""
+CREATE TABLE time (
+    start_time TIMESTAMP NOT NULL,
+    hour INT NOT NULL,
+    day VARCHAR NOT NULL,
+    week INT NOT NULL,
+    month INT NOT NULL,
+    year INT NOT NULL,
+    weekday INT NOT NULL
+);
 """)
 
 # STAGING TABLES
