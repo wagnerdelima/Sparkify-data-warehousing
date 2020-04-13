@@ -22,7 +22,7 @@ CREATE TABLE events_stage (
     artist_id VARCHAR,
     auth VARCHAR NOT NULL,
     first_name VARCHAR NOT NULL,
-    gender VARCHAR NOT NULL ,
+    gender VARCHAR NOT NULL,
     item_in_session VARCHAR NOT NULL,
     last_name VARCHAR NOT NULL,
     length FLOAT8,
@@ -41,15 +41,52 @@ CREATE TABLE events_stage (
 """)
 
 staging_songs_table_create = ("""
+CREATE TABLE songs_stage (
+    num_songs INT NOT NULL,
+    artist_id VARCHAR ENCODE ZSTD,
+    artist_latitude FLOAT8,
+    artist_longitude FLOAT8,
+    artist_location VARCHAR ENCODE ZSTD,
+    artist_name VARCHAR,
+    song_id VARCHAR,
+    title VARCHAR ENCODE ZSTD,
+    duration FLOAT8,
+    year INT
+);
 """)
 
 songplay_table_create = ("""
+CREATE TABLE songplays (
+    songplay_id INT IDENTITY(0,1) PRIMARY KEY NOT NULL,
+    start_time TIMESTAMP NOT NULL SORTKEY,
+    user_id INT NOT NULL,
+    level VARCHAR NOT NULL,
+    song_id INT NOT NULL,
+    artist_id INT NOT NULL,
+    session_id INT NOT NULL,
+    location VARCHAR ENCODE ZSTD NOT NULL,
+    user_agent VARCHAR ENCODE ZSTD NOT NULL
+);
 """)
 
 user_table_create = ("""
+CREATE TABLE users (
+    user_id INT NOT NULL,
+    first_name VARCHAR NOT NULL,
+    last_name VARCHAR NOT NULL,
+    gender VARCHAR NOT NULL,
+    level FLOAT8
+);
 """)
 
 song_table_create = ("""
+CREATE TABLE songs (
+    song_id INT NOT NULL,
+    title VARCHAR ENCODE ZSTD,
+    artist_id INT NOT NULL,
+    year INT,
+    duration FLOAT8
+);
 """)
 
 artist_table_create = ("""
