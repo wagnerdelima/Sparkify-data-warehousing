@@ -3,7 +3,11 @@ import psycopg2
 from sql_queries import create_table_queries, drop_table_queries
 
 
-def drop_tables(cur, conn):
+def drop_tables(cur, conn) -> None:
+    """
+    Drops every table specified
+    within the sql_queries.py file.
+    """
     for query in drop_table_queries:
         cur.execute(query)
         conn.commit()
@@ -11,6 +15,10 @@ def drop_tables(cur, conn):
 
 
 def create_tables(cur, conn):
+    """
+    Creates all tables from design
+    within the sql_queries.py file.
+    """
     for query in create_table_queries:
         cur.execute(query)
         conn.commit()
@@ -18,6 +26,10 @@ def create_tables(cur, conn):
 
 
 def main():
+    """
+    Main method. Connects to Amazon AWS RedShift.
+    Creates all tables and migrates data.
+    """
     config = configparser.ConfigParser()
     config.read('dwh.cfg')
 

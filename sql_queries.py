@@ -171,7 +171,8 @@ INSERT INTO songplays (
 user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
 SELECT DISTINCT user_id, first_name, last_name, gender, level
-FROM events_stage;
+FROM events_stage
+WHERE page = 'NextSong';
 """)
 
 song_table_insert = ("""

@@ -4,18 +4,32 @@ from sql_queries import copy_table_queries, insert_table_queries
 
 
 def load_staging_tables(cur, conn):
+    """
+    Loads data from S3 bucket into Staging tables
+    within the RedShift cluster.
+    """
     for query in copy_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def insert_tables(cur, conn):
+    """
+    Process and normalise data from staging tables
+    into the Star Schema Design.
+    """
     for query in insert_table_queries:
         cur.execute(query)
         conn.commit()
 
 
 def main():
+    """
+    Connects to the RedShift cluster and loads data into
+    staging tables as well as inserts data into the
+    Star Schema Database Design.
+    :return:
+    """
     config = configparser.ConfigParser()
     config.read('dwh.cfg')
 
