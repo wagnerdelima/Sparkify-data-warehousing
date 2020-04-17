@@ -18,7 +18,7 @@ time_table_drop = "DROP TABLE IF EXISTS time;"
 
 staging_events_table_create = ("""
 CREATE TABLE events_stage (
-    artist_id VARCHAR,
+    artist_id VARCHAR ENCODE ZSTD,
     auth VARCHAR,
     first_name VARCHAR,
     gender VARCHAR,
@@ -41,7 +41,7 @@ CREATE TABLE events_stage (
 
 staging_songs_table_create = ("""
 CREATE TABLE songs_stage (
-    num_songs INT ,
+    num_songs INT,
     artist_id VARCHAR ENCODE ZSTD,
     artist_latitude FLOAT8,
     artist_longitude FLOAT8,
@@ -57,14 +57,14 @@ CREATE TABLE songs_stage (
 songplay_table_create = ("""
 CREATE TABLE songplays (
     songplay_id INT IDENTITY(0,1) PRIMARY KEY,
-    start_time TIMESTAMP NOT NULL,
+    start_time TIMESTAMP,
     user_id VARCHAR,
     level VARCHAR,
     song_id VARCHAR,
-    artist_id VARCHAR,
+    artist_id VARCHAR ENCODE ZSTD,
     session_id VARCHAR,
     location VARCHAR ENCODE ZSTD,
-    user_agent VARCHAR ENCODE ZSTD NOT NULL
+    user_agent VARCHAR ENCODE ZSTD
 )
 DISTSTYLE KEY DISTKEY (user_id)
 SORTKEY(start_time);
@@ -72,7 +72,7 @@ SORTKEY(start_time);
 
 user_table_create = ("""
 CREATE TABLE users (
-    user_id VARCHAR,
+    user_id VARCHAR PRIMARY KEY,
     first_name VARCHAR,
     last_name VARCHAR,
     gender VARCHAR,
@@ -83,9 +83,9 @@ DISTSTYLE KEY DISTKEY (user_id);
 
 song_table_create = ("""
 CREATE TABLE songs (
-    song_id VARCHAR ,
+    song_id VARCHAR PRIMARY KEY,
     title VARCHAR ENCODE ZSTD,
-    artist_id VARCHAR,
+    artist_id VARCHAR ENCODE ZSTD,
     year INT,
     duration FLOAT8
 )
@@ -95,7 +95,7 @@ COMPOUND SORTKEY (title, year);
 
 artist_table_create = ("""
 CREATE TABLE artists (
-    artist_id VARCHAR,
+    artist_id VARCHAR PRIMARY KEY,
     name VARCHAR,
     location VARCHAR ENCODE ZSTD,
     latitude FLOAT8,
