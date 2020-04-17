@@ -3,7 +3,7 @@ import psycopg2
 from sql_queries import copy_table_queries, insert_table_queries
 
 
-def load_staging_tables(cur, conn):
+def load_staging_tables(cur, conn) -> None:
     """
     Loads data from S3 bucket into Staging tables
     within the RedShift cluster.
@@ -13,7 +13,7 @@ def load_staging_tables(cur, conn):
         conn.commit()
 
 
-def insert_tables(cur, conn):
+def insert_tables(cur, conn) -> None:
     """
     Process and normalise data from staging tables
     into the Star Schema Design.
@@ -23,7 +23,7 @@ def insert_tables(cur, conn):
         conn.commit()
 
 
-def main():
+def main() -> None:
     """
     Connects to the RedShift cluster and loads data into
     staging tables as well as inserts data into the

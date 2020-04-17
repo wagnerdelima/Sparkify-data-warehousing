@@ -14,7 +14,7 @@ def drop_tables(cur, conn) -> None:
         print('Deleted')
 
 
-def create_tables(cur, conn):
+def create_tables(cur, conn) -> None:
     """
     Creates all tables from design
     within the sql_queries.py file.
@@ -25,7 +25,7 @@ def create_tables(cur, conn):
         print('Created')
 
 
-def main():
+def main() -> None:
     """
     Main method. Connects to Amazon AWS RedShift.
     Creates all tables and migrates data.
