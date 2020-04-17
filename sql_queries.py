@@ -153,7 +153,7 @@ INSERT INTO songplays (
     session_id,
     location,
     user_agent
-) SELECT TIMESTAMP 'epoch' + ts::INT8/1000 * INTERVAL '1 second' AS start_time,
+) SELECT DISTINCT TIMESTAMP 'epoch' + ts::INT8/1000 * INTERVAL '1 second' AS start_time,
          e.user_id as user_id,
          e.level as level,
          s.song_id as song_id,
@@ -170,19 +170,19 @@ INSERT INTO songplays (
 
 user_table_insert = ("""
 INSERT INTO users (user_id, first_name, last_name, gender, level)
-SELECT user_id, first_name, last_name, gender, level
+SELECT DISTINCT user_id, first_name, last_name, gender, level
 FROM events_stage;
 """)
 
 song_table_insert = ("""
 INSERT INTO songs (song_id, title, artist_id, year, duration)
-SELECT song_id, title, artist_id, year, duration
+SELECT DISTINCT song_id, title, artist_id, year, duration
 FROM songs_stage;
 """)
 
 artist_table_insert = ("""
 INSERT INTO artists (artist_id, name, location, latitude, longitude)
-SELECT artist_id as artist_id,
+SELECT DISTINCT artist_id as artist_id,
        artist_name as name,
        artist_location as location,
        artist_latitude as latitude,
@@ -198,7 +198,7 @@ SELECT
     * INTERVAL '1 second' AS start_time
     FROM events_stage
 )
-SELECT start_time AS start_time,
+SELECT DISTINCT start_time AS start_time,
        EXTRACT(hour FROM start_time) AS hour,
        EXTRACT(day FROM start_time) AS day,
        EXTRACT(week FROM start_time) AS week,
